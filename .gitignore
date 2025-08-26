@@ -4,3 +4,5 @@ __pycache__/
 .ipynb_checkpoints/
 onet_data_exploration
 merged_data_files
+original_data
+scripts/plots_original.ipynb
