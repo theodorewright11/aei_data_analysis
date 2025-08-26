@@ -11,8 +11,7 @@ The result is a unified dataset that links occupational tasks percent appearing 
 
 ## Repository Structure (WIP)
 charts\
-extra_data: all data sets used for merging and analysis.\
-original_data: all original data Anthropic used for their analysis.\
+data: all data sets used for merging and analysis.\
 scripts: all scripts used for merging and chart creation.
 
 
@@ -68,7 +67,7 @@ pip install -r requirements.txt
 ```bash
 jupyter notebook scripts/data_merge.ipynb
 ```
-Result is saved to ``` extra_data/tasks_final.csv```
+Result is saved to ``` data/tasks_final.csv```
 - Optional: Under the "Imports" → "Parameter Adjustment" section in ```scripts/data_merge.ipynb``` frequency weights, inflation factors, and a variable toggle to save each steps' data frame into a csv are available for adjustment.
 
 
@@ -76,7 +75,7 @@ Result is saved to ``` extra_data/tasks_final.csv```
 # Analysis
 
 ## Data Sources
-- **tasks_final.csv**: ``` extra_data/tasks_final.csv``` created from merging.
+- **tasks_final.csv**: ``` data/tasks_final.csv``` created from merging.
 
 
 
@@ -91,5 +90,5 @@ WIP
 
 
 # Outputs
-- Dataset  ``` extra_data/tasks_final.csv``` that links occupational tasks percent appearing in Claude conversations to wage, employment, and importance/frequency/relevance ratings for 2015 and 2025
+- Dataset  ``` data/tasks_final.csv``` that links occupational tasks percent appearing in Claude conversations to wage, employment, and importance/frequency/relevance ratings for 2015 and 2025
 - Charts ```charts/WIP``` WIP
