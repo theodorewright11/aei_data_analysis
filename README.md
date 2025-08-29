@@ -42,7 +42,7 @@ The merging pipeline follows these main steps. The script also organizes the ste
 4. Add 2015 Wage and Employment Data  
 5. Adjust Employment Columns 
 6. Add Task Rating Data 
-7. Final Cleanup    
+7. Final Cleanup On Main Data   
 
 Full details on this process can be found here [here](https://docs.google.com/document/d/14HfdnTBviQ97DyKEBPYV6MVJ6uuteOk9lDPbGqdi1Z0/edit?usp=sharing).
 
