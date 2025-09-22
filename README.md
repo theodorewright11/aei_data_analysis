@@ -1,3 +1,4 @@
+# *WIP
 # Overview
 
 This project merges data from three primary sources:
@@ -9,7 +10,7 @@ The result is a unified dataset that links occupational tasks percent appearing 
 
 
 
-## Repository Structure (WIP)
+## Repository Structure (TBA)
 charts\
 data: all data sets used for merging and analysis.\
 scripts: all scripts used for merging and chart creation.
@@ -80,12 +81,12 @@ Result is saved to ``` data/tasks_final.csv```
 
 
 ## Steps
-WIP
+TBA
 
 
 
 ## Reproducing
-WIP
+TBA
 
 
 
