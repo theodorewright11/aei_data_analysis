@@ -58,7 +58,7 @@ cd aei_data_analysis
 1. Create virtual environment (recommended):
 ```bash
 python -m venv venv
-venv\Scripts\activate  # On Mac/Linux: source venv/bin/activate
+.\venv\Scripts\activate.ps1 
 ```
 1. Install dependencies:
 ```bash

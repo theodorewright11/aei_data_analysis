@@ -42,17 +42,19 @@ Outputs:
 ```bash
 jupyter notebook scripts/charts.ipynb
 ```
-Output: Chart files in `charts/` subdirectories
+Output: Chart files in `outputs/exploratory_charts/` subdirectories
 
 **Other analysis notebooks:**
-- `scripts/plots_original.ipynb` - Original plotting scripts
-- `scripts/plots_edited_with_old.ipynb` - Edited plotting with historical data
+- `scripts/original_scripts/plots_original.ipynb` - Original plotting scripts
+- `scripts/original_scripts/plots_edited_with_old.ipynb` - Edited plotting with historical data
 
 ## Repository Structure
 
 ```
 aei_data_analysis/
 ├── data/                       # All datasets (source and intermediate)
+│   ├── original_data/         # Original source data files
+│   ├── merged_data_files/     # Intermediate merge outputs (optional saves)
 │   ├── tasks_final.csv        # Main output: merged dataset
 │   ├── task_pct_v1.csv        # AEI task percentages (version 1)
 │   ├── task_pct_v2.csv        # AEI task percentages (version 2)
@@ -65,13 +67,17 @@ aei_data_analysis/
 │   ├── task_statements_v20.1.csv  # O*NET task descriptions
 │   ├── ratings_eco_2025.csv       # Economy-wide task frequency (2025)
 │   └── ratings_eco_2015.csv       # Economy-wide task frequency (2015)
-├── merged_data_files/         # Intermediate merge outputs (optional saves)
+├── outputs/                   # Generated outputs
+│   ├── charts_for_sharing/    # Charts for reports and sharing
+│   └── exploratory_charts/    # Exploratory visualizations
 ├── scripts/                   # Jupyter notebooks
 │   ├── data_merge.ipynb      # Main merging pipeline
 │   ├── charts.ipynb          # Chart generation
-│   └── code_counter.py       # Utility to count notebook code lines
-├── charts/                    # Generated visualizations
-└── onet_data_exploration/     # Exploratory analysis notebooks
+│   └── original_scripts/     # Original/legacy plotting scripts
+│       ├── plots_original.ipynb
+│       └── plots_edited_with_old.ipynb
+└── exploratory/               # Exploratory analysis
+    └── onet_data_exploration/ # O*NET data exploration notebooks
 ```
 
 ## Data Merging Pipeline Architecture
@@ -131,7 +137,7 @@ In `scripts/data_merge.ipynb` under "Imports → Parameter Adjustment" section:
 
 - **Frequency weights**: Adjust how task frequency ratings are weighted
 - **Inflation factors**: Control wage adjustment between 2015-2024
-- **Save intermediate CSVs**: Toggle to save each step's dataframe to `merged_data_files/`
+- **Save intermediate CSVs**: Toggle to save each step's dataframe to `data/merged_data_files/`
 
 ## Important Data Relationships
 
@@ -151,11 +157,12 @@ In `scripts/data_merge.ipynb` under "Imports → Parameter Adjustment" section:
 
 When modifying the data pipeline:
 1. The pipeline is sequential - each step depends on previous steps
-2. Intermediate dataframes are saved in `merged_data_files/` if enabled
+2. Intermediate dataframes are saved in `data/merged_data_files/` if enabled
 3. Column naming conventions follow pattern: `{metric}_{year}_{geography}`
 4. Missing data handling varies by step - check imputation logic in Step 6.3
 
 When creating new visualizations:
 1. Load `data/tasks_final.csv` as the primary data source
-2. Charts are organized by subdirectories in `charts/`
-3. Follow existing plotting patterns in `scripts/charts.ipynb`
+2. Exploratory charts go to `outputs/exploratory_charts/`
+3. Charts for sharing/reports go to `outputs/charts_for_sharing/`
+4. Follow existing plotting patterns in `scripts/charts.ipynb`
