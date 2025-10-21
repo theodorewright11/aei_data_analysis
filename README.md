@@ -11,10 +11,10 @@ The result is a unified dataset that links occupational tasks percent appearing 
 
 
 ## Repository Structure
-outputs/exploratory_charts: 100+ charts made from looping over different parameters and data variations covering various categories and granularities.\
-outputs/charts_for_sharing: A few handpicked charts that give real insights and can be shared to others. READ.me included for interpretation \
-data: all data sets used for merging as well as those created that are used for analysis.\
-scripts: all scripts used for merging and chart creation.
+```outputs/exploratory_charts```: 100+ charts made from looping over different parameters and data variations covering various categories and granularities.\
+```outputs/charts_for_sharing/report```: A few handpicked charts that give real insights and can be shared to others. READ.me included for interpretation \
+```data```: all datasets used for merging as well as those created that are used for analysis.\
+```scripts```: all scripts used for merging and chart creation.
 
 
 # Merging 
