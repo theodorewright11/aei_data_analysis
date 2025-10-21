@@ -6,13 +6,14 @@ This project merges data from three primary sources:
 - Bureau of Labor Statistics (BLS) Occupational Employment and Wage Statistics (OEWS)
 - Occupational Information Network (O*NET)
 
-The result is a unified dataset that links occupational tasks percent appearing in Claude conversations to wage, employment, and importance/frequency/relevance ratings for 2015 and 2025. We then use this data for analysis with charts stored in charts folder and script for generating these in scripts folder. 
+The result is a unified dataset that links occupational tasks percent appearing in Claude conversations to wage, employment, and importance/frequency/relevance ratings for 2015 and 2025. We then use this data for analysis with charts stored in the outputs folder and scripts for generating these in the scripts folder. 
 
 
 
-## Repository Structure (TBA)
-charts\
-data: all data sets used for merging and analysis.\
+## Repository Structure
+outputs/exploratory_charts: 100+ charts made from looping over different parameters and data variations covering various categories and granularities.\
+outputs/charts_for_sharing: A few handpicked charts that give real insights and can be shared to others. READ.me included for interpretation \
+data: all data sets used for merging as well as those created that are used for analysis.\
 scripts: all scripts used for merging and chart creation.
 
 
@@ -20,7 +21,8 @@ scripts: all scripts used for merging and chart creation.
 
 ## Data Sources
 - AEI Data
-  - [Task Mappings 2/10/2025 Release](https://huggingface.co/datasets/Anthropic/EconomicIndex/blob/main/release_2025_02_10/onet_task_mappings.csv) 
+  - [Task Mappings v1 2/10/2025 Release](https://huggingface.co/datasets/Anthropic/EconomicIndex/blob/main/release_2025_02_10/onet_task_mappings.csv) 
+  -  [Task Mappings v2 3/27/2025 Release](https://huggingface.co/datasets/Anthropic/EconomicIndex/blob/main/release_2025_03_27/task_pct_v2.csv) 
 - BLS OEWS
   - [All OEWS National and State 2024 and 2015](https://www.bls.gov/oes/tables.htm)
 - O\*NET Task Statements & Ratings
@@ -43,9 +45,13 @@ The merging pipeline follows these main steps. The script also organizes the ste
 4. Add 2015 Wage and Employment Data  
 5. Adjust Employment Columns 
 6. Add Task Rating Data 
-7. Final Cleanup On Main Data   
+7. Final Cleanup On Main Data
+8. Create Economy Task Frequency Data
+9. Create Task Automation Data
 
-Full details on this process can be found here [here](https://docs.google.com/document/d/14HfdnTBviQ97DyKEBPYV6MVJ6uuteOk9lDPbGqdi1Z0/edit?usp=sharing).
+
+
+Full details on this process can be found [here](https://docs.google.com/document/d/14HfdnTBviQ97DyKEBPYV6MVJ6uuteOk9lDPbGqdi1Z0/edit?usp=sharing).
 
 
 
@@ -68,28 +74,42 @@ pip install -r requirements.txt
 ```bash
 jupyter notebook scripts/data_merge.ipynb
 ```
-Result is saved to ``` data/tasks_final.csv```
-- Optional: Under the "Imports" → "Parameter Adjustment" section in ```scripts/data_merge.ipynb``` frequency weights, inflation factors, and a variable toggle to save each steps' data frame into a csv are available for adjustment.
+Datasets used are saved to the data folder namely: ``` data/tasks_final.csv```
+- Optional: Under the "Imports" → "Parameter Adjustment" section in ```scripts/data_merge.ipynb```, frequency weights, inflation factors, and a variable toggle to save each steps' data frame into a csv are available for adjustment.
 
 
 
 # Analysis
 
 ## Data Sources
-- **tasks_final.csv**: ``` data/tasks_final.csv``` created from merging.
+- ``` data/tasks_final.csv``` created from merging.
+- ``` data/ratings_eco_2015.csv``` created from merging.
+- ``` data/ratings_eco_2025.csv``` created from merging.
+- ``` data/automation_tasks_imputed.csv``` created from merging.
+- ``` data/automation_tasks_matched_2015.csv``` created from merging.
+- ``` data/automation_tasks_matched_2025.csv``` created from merging.
 
 
 
 ## Steps
-TBA
+WIP
 
 
 
 ## Reproducing
-TBA
+WIP
 
 
 
 # Outputs
-- Dataset  ``` data/tasks_final.csv``` that links occupational tasks percent appearing in Claude conversations to wage, employment, and importance/frequency/relevance ratings for 2015 and 2025
-- Charts ```charts/WIP``` WIP
+## Datasets
+- ``` data/tasks_final.csv```:  links occupational tasks percent appearing in Claude conversations (v1) to wage, employment, and importance/frequency/relevance ratings for 2015 and 2025.
+- ``` data/tasks_final_v2.csv```:  links occupational tasks percent appearing in Claude conversations (v2) to wage, employment, and importance/frequency/relevance ratings for 2015 and 2025.
+- `data/ratings_eco_2015.csv`: O*NET task ratings (frequency, importance, relevance) merged with 2015 BLS employment and wage data at task level.
+- `data/ratings_eco_2025.csv`: O*NET 2025 task ratings merged with 2024 BLS employment and wage data at task level.
+- `data/automation_tasks_imputed.csv`: Primary analysis dataset linking AI-automatable tasks (from AEI) to baseline task completions with SOC code transitions and imputed employment values.
+- `data/automation_tasks_matched_2015.csv`: AI tasks matched directly to 2015 baseline without imputation.
+- `data/automation_tasks_matched_2025.csv`: AI tasks matched directly to 2025 baseline without imputation (excludes unmatched tasks from AEI data, ~15% task coverage data loss).
+## Charts
+- ```charts/exploratory```: WIP
+- ```charts/report```: see ```charts/report/README.md``` for an explanation of these charts.
