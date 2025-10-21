@@ -8,6 +8,7 @@ data/merged_data_files
 exploratory
 scripts/original_scripts
 CLAUDE.md
+.claude/
 
 
 # Byte-compiled / optimized / DLL files
