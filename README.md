@@ -1,4 +1,3 @@
-# *WIP
 # Overview
 
 This project merges data from three primary sources:
@@ -12,7 +11,7 @@ The result is a unified dataset that links occupational tasks percent appearing 
 
 ## Repository Structure
 ```outputs/exploratory_charts```: 100+ charts made from looping over different parameters and data variations covering various categories and granularities.\
-```outputs/charts_for_sharing/report```: A few handpicked charts that give real insights and can be shared to others. READ.me included for interpretation \
+```outputs/charts_for_sharing/report```: A few handpicked charts that give real insights and can be shared to others. README.md included for interpretation \
 ```data```: all datasets used for merging as well as those created that are used for analysis.\
 ```scripts```: all scripts used for merging and chart creation.
 
@@ -112,4 +111,4 @@ WIP
 - `data/automation_tasks_matched_2025.csv`: AI tasks matched directly to 2025 baseline without imputation (excludes unmatched tasks from AEI data, ~15% task coverage data loss).
 ## Charts
 - ```charts/exploratory```: WIP
-- ```charts/report```: see ```charts/report/README.md``` for an explanation of these charts.
+- ```charts/charts_for_sharing/report```: see ```charts/charts_for_sharing/report/README.md``` for an explanation of these charts.
