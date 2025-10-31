@@ -21,7 +21,8 @@ The result is a unified dataset that links occupational tasks percent appearing 
 ## Data Sources
 - AEI Data
   - [Task Mappings v1 2/10/2025 Release](https://huggingface.co/datasets/Anthropic/EconomicIndex/blob/main/release_2025_02_10/onet_task_mappings.csv) 
-  -  [Task Mappings v2 3/27/2025 Release](https://huggingface.co/datasets/Anthropic/EconomicIndex/blob/main/release_2025_03_27/task_pct_v2.csv) 
+  - [Task Mappings v2 3/27/2025 Release](https://huggingface.co/datasets/Anthropic/EconomicIndex/blob/main/release_2025_03_27/task_pct_v2.csv)
+  - [Automation vs Augmentation by Task v2 3/27/2025 Release](https://huggingface.co/datasets/Anthropic/EconomicIndex/blob/main/release_2025_03_27/automation_vs_augmentation_by_task.csv)  
 - BLS OEWS
   - [All OEWS National and State 2024 and 2015](https://www.bls.gov/oes/tables.htm)
 - O\*NET Task Statements & Ratings
@@ -111,4 +112,4 @@ WIP
 - `data/automation_tasks_matched_2025.csv`: AI tasks matched directly to 2025 baseline without imputation (excludes unmatched tasks from AEI data, ~15% task coverage data loss).
 ## Charts
 - ```charts/exploratory```: WIP
-- ```charts/charts_for_sharing/report```: see ```charts/charts_for_sharing/report/README.md``` for an explanation of these charts.
+- ```charts/charts_for_sharing/prelim_report_oct_2025```: see ```charts/charts_for_sharing/prelim_report_oct_2025/README.md``` for an explanation of these charts.

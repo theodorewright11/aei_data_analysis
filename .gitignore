@@ -3,10 +3,12 @@ __pycache__/
 *.pyc
 .ipynb_checkpoints/
 outputs/charts_for_sharing/alice
+outputs/charts_for_sharing/nandeeni
 data/original_data
 data/merged_data_files
 exploratory
 scripts/original_scripts
+scripts/charts_for_executive_summary.ipynb
 CLAUDE.md
 .claude/
 

@@ -1,4 +1,4 @@
-# AI Task Automation Analysis - Report Charts
+# AI Task Automation Analysis - Preliminary Report Oct 2025 Charts
 
 ## Overview
 
@@ -35,7 +35,6 @@ This folder contains publication-ready charts analyzing AI labor force impact po
 - Computer and Mathematical (33.4%) comes in at 5th place, contrary to Anthropics results, which had the majority by a wide margin of these occupations represented in their usage data. However one possible reason for this could be that their tasks take longer to complete, which would result in less coverage and therefore automation.
 - Educational Instruction and Library has a significant margin above the next closest major occupational category
 - Lowest occupations involve more physicality as would be expected.
-- WIP
 ---
 
 #### Average % Occupation Automated By Major Occupational Category
@@ -46,10 +45,6 @@ This folder contains publication-ready charts analyzing AI labor force impact po
 - Percentages indicate the average percent that an occupation's tasks are automated in that major occupational category.
 
 **Notable Results:**
-- Top 3 categories are Educational Instruction and Library (53%), Legal (38.5%), and Office and Administrative Support (37%).
-- Computer and Mathematical (33.4%) comes in at 5th place, contrary to Anthropics results, which had the majority by a wide margin of these occupations represented in their usage data. However one possible reason for this could be that their tasks take longer to complete, which would result in less coverage and therefore automation.
-- Educational Instruction and Library has a significant margin above the next closest major occupational category
-- Lowest occupations involve more physicality as would be expected.
 - WIP
 ---
 
