@@ -3,14 +3,15 @@ __pycache__/
 *.pyc
 .ipynb_checkpoints/
 outputs/charts_for_sharing/alice
-outputs/charts_for_sharing/nandeeni
 data/original_data
 data/merged_data_files
 exploratory
 scripts/original_scripts
-scripts/charts_for_executive_summary.ipynb
+scripts/charts_for_executive_summary_oct_2025.ipynb
 CLAUDE.md
 .claude/
+outputs/charts_for_sharing/prelim_report_oct_2025/comparisons
+outputs/charts_for_sharing/executive_summary_oct_2025
 
 
 # Byte-compiled / optimized / DLL files
