@@ -12,6 +12,7 @@ CLAUDE.md
 .claude/
 outputs/charts_for_sharing/prelim_report_oct_2025/comparisons
 outputs/charts_for_sharing/executive_summary_oct_2025
+data/v2_auto_aug_variations
 
 
 # Byte-compiled / optimized / DLL files
