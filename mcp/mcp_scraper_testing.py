@@ -1,3 +1,4 @@
+from collections import Counter
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -9,11 +10,14 @@ start = time.time()
 
 BASE_URL = "https://mcp.so"
 HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; TeddyBot/1.0)"}
-VERBOSE = False  # set True if you want to see failed URLs
+VERBOSE = False
 
 # ---------- Stage 1: collect all server cards across pages ----------
 records = []
-for page in tqdm(range(1, 273), desc="Collecting server links"):   # adjust to (1, 273) later
+seen_urls = set()
+page_counts = []
+
+for page in tqdm(range(1, 273), desc="Collecting server links"):
     url = f"{BASE_URL}/servers?page={page}"
     try:
         r = requests.get(url, headers=HEADERS)
@@ -21,43 +25,61 @@ for page in tqdm(range(1, 273), desc="Collecting server links"):   # adjust to (
         soup = BeautifulSoup(r.text, "html.parser")
         cards = soup.select("a[href^='/server/']")
         if not cards:
-            print(f"No cards found on page {page}, stopping.")
+            print(f"⚠️ No cards found on page {page}, stopping.")
             break
+
+        new_urls = 0
         for c in cards:
             title_elem = c.find(["h2", "h3", "h4"])
             desc_elem  = c.find("p")
             href = BASE_URL + c["href"]
-            records.append({
-                "title": title_elem.get_text(strip=True) if title_elem else None,
-                "description": desc_elem.get_text(strip=True) if desc_elem else None,
-                "url": href
-            })
-        time.sleep(0.15)  # polite delay between page requests
+            if href not in seen_urls:
+                seen_urls.add(href)
+                records.append({
+                    "page": page,
+                    "title": title_elem.get_text(strip=True) if title_elem else None,
+                    "description": desc_elem.get_text(strip=True) if desc_elem else None,
+                    "url": href
+                })
+                new_urls += 1
+
+        page_counts.append((page, len(cards), new_urls))
+        if page % 25 == 0:
+            print(f"Page {page}: {len(cards)} cards, {new_urls} new, total unique so far {len(seen_urls)}")
+        time.sleep(0.15)
+
     except Exception as e:
         print(f"⚠️ failed page {page}: {e}")
         continue
 
-df = pd.DataFrame(records).drop_duplicates(subset="url").reset_index(drop=True)
-# df = df.drop_duplicates(subset="title").reset_index(drop=True)
-print(f"Collected {len(df)} unique server listings")
+df = pd.DataFrame(records)
+print(f"\n✅ Collected {len(df)} unique URLs after deduping.")
+print(f"Total pages scraped: {len(page_counts)}")
 
-# ---------- Stage 2: detail-page scraping (threaded) ----------
+# Optional: check if new URLs dry up
+no_new = [p for p, cards, new in page_counts if new == 0]
+if no_new:
+    print(f"⚠️ Pages with zero new URLs: {no_new[:10]} ...")
+
+# Optional: show distribution of URLs per page
+print("\nTop 10 pages by # of new URLs:")
+for p, cards, new in sorted(page_counts, key=lambda x: -x[2])[:10]:
+    print(f"  Page {p}: {new} new / {cards} total cards")
+
+# ---------- Continue with detail scraping ----------
 def scrape_detail(row):
-    """Fetch and parse one server page."""
     rec = row.to_dict()
     try:
         r2 = requests.get(rec["url"], headers=HEADERS, timeout=10)
         r2.raise_for_status()
         s2 = BeautifulSoup(r2.text, "html.parser")
 
-        # uploaded time
         time_div = s2.find(
             "div",
             class_="bg-secondary border-secondary text-secondary-foreground px-2 py-1 rounded-full text-xs truncate flex items-center gap-1",
         )
         rec["uploaded"] = time_div.get_text(strip=True) if time_div else None
 
-        # use-cases section
         usecase_header = s2.find(
             lambda tag: tag.name in ["h2", "h3", "h4"]
             and "use case" in tag.get_text(strip=True).lower()
@@ -75,16 +97,12 @@ def scrape_detail(row):
             rec["use_cases"] = " ".join(texts) if texts else None
         else:
             rec["use_cases"] = None
-
     except Exception as e:
         rec["uploaded"], rec["use_cases"] = None, None
         if VERBOSE:
             print(f"⚠️ failed on {rec['url']}: {e}")
-
     return rec
 
-
-# use 10 threads (adjust if connection stable; 5–15 is typical)
 results = []
 with ThreadPoolExecutor(max_workers=10) as executor:
     futures = [executor.submit(scrape_detail, row) for _, row in df.iterrows()]
@@ -92,9 +110,7 @@ with ThreadPoolExecutor(max_workers=10) as executor:
         results.append(f.result())
 
 df_out = pd.DataFrame(results)
-
-# ---------- Save ----------
-out_path = "mcp/data/mcp_desc_all_nov_7.csv"
+out_path = "mcp/data/mcp_desc_all_nov_7_debug.csv"
 df_out.to_csv(out_path, index=False)
-print(f"✅ saved {len(df_out)} rows to {out_path}")
+print(f"\n✅ saved {len(df_out)} rows to {out_path}")
 print("Elapsed:", round(time.time() - start, 2), "seconds")
