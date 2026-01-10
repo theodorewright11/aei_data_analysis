@@ -12,12 +12,35 @@ BASE_URL = "https://mcp.so"
 HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; TeddyBot/1.0)"}
 VERBOSE = False
 
+def extract_section_text(soup, header_keywords):
+    header = soup.find(
+        lambda tag: tag.name in ["h2", "h3", "h4"]
+        and any(k in tag.get_text(strip=True).lower() for k in header_keywords)
+    )
+    if not header:
+        return None
+
+    texts = []
+    for sib in header.find_next_siblings():
+        if sib.name in ["h2", "h3", "h4"]:
+            break
+        if sib.name in ["script", "style"]:
+            continue
+        txt = sib.get_text(" ", strip=True)
+        if txt:
+            texts.append(txt)
+
+    return " ".join(texts) if texts else None
+
+
+
+
 # ---------- Stage 1: collect all server cards across pages ----------
 records = []
 seen_urls = set()
 page_counts = []
 
-for page in tqdm(range(1, 273), desc="Collecting server links"):
+for page in tqdm(range(1, 2), desc="Collecting server links"):
     url = f"{BASE_URL}/servers?page={page}"
     try:
         r = requests.get(url, headers=HEADERS)
@@ -80,28 +103,23 @@ def scrape_detail(row):
         )
         rec["uploaded"] = time_div.get_text(strip=True) if time_div else None
 
-        usecase_header = s2.find(
-            lambda tag: tag.name in ["h2", "h3", "h4"]
-            and "use case" in tag.get_text(strip=True).lower()
+        rec["use_cases"] = extract_section_text(
+            s2, header_keywords=["use case"]
         )
-        if usecase_header:
-            texts = []
-            for sib in usecase_header.find_next_siblings():
-                if sib.name in ["h2", "h3", "h4"]:
-                    break
-                if sib.name in ["script", "style"]:
-                    continue
-                txt = sib.get_text(" ", strip=True)
-                if txt:
-                    texts.append(txt)
-            rec["use_cases"] = " ".join(texts) if texts else None
-        else:
-            rec["use_cases"] = None
+
+        rec["key_features"] = extract_section_text(
+            s2, header_keywords=["key feature"]
+        )
+
     except Exception as e:
-        rec["uploaded"], rec["use_cases"] = None, None
+        rec["uploaded"] = None
+        rec["use_cases"] = None
+        rec["key_features"] = None
         if VERBOSE:
             print(f"⚠️ failed on {rec['url']}: {e}")
+
     return rec
+
 
 results = []
 with ThreadPoolExecutor(max_workers=10) as executor:
@@ -110,7 +128,7 @@ with ThreadPoolExecutor(max_workers=10) as executor:
         results.append(f.result())
 
 df_out = pd.DataFrame(results)
-out_path = "mcp/data/mcp_desc_all_nov_7_debug.csv"
+out_path = "mcp/data/mcp_desc_test_jan_5.csv"
 df_out.to_csv(out_path, index=False)
 print(f"\n✅ saved {len(df_out)} rows to {out_path}")
 print("Elapsed:", round(time.time() - start, 2), "seconds")
