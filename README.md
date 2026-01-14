@@ -1,5 +1,6 @@
 # Overview
 
+*This README has not yet been updated to reflect changes from the past 3 months. This primarily includes the the mcp and onet_hierarchy folders.
 This project merges data from three primary sources:
 - Anthropic Economic Index (AEI) task conversation data
 - Bureau of Labor Statistics (BLS) Occupational Employment and Wage Statistics (OEWS)
