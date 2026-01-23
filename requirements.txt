@@ -8,4 +8,15 @@ openpyxl==3.1.5
 bs4==4.14.2
 tqdm==4.67.1
 
-# pip install pandas sentence-transformers torch tqdm
+# For O*NET hierarchy/clustering work
+sentence-transformers
+torch
+scikit-learn
+
+# For LLM API calls
+openai
+anthropic
+google-genai
+python-dotenv
+nest_asyncio
+lxml
