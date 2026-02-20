@@ -15,6 +15,7 @@ outputs/charts_for_sharing/executive_summary_oct_2025
 data/v2_auto_aug_variations
 mcp/mcp_llm_classification.ipynb
 onet_hierarchy/
+mcp
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
